@@ -12,19 +12,14 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.ServiceWorkerClient;
-import android.webkit.ServiceWorkerController;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MainActivity extends Activity {
     private static final String HOME = "https://cpmcarshop.github.io/";
@@ -49,7 +44,6 @@ public class MainActivity extends Activity {
 
         buildUi();
         setupWebView(web);
-        configureServiceWorker();
         web.loadUrl(HOME);
     }
 
@@ -155,17 +149,6 @@ public class MainActivity extends Activity {
         view.setBackgroundColor(Color.TRANSPARENT);
         view.setWebViewClient(new SiteWebViewClient());
         view.setWebChromeClient(new SiteChromeClient());
-    }
-
-    private void configureServiceWorker() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            ServiceWorkerController.getInstance().setServiceWorkerClient(new ServiceWorkerClient() {
-                @Override
-                public WebResourceResponse shouldInterceptRequest(WebResourceRequest request) {
-                    return null;
-                }
-            });
-        }
     }
 
     private class SiteWebViewClient extends WebViewClient {
